@@ -117,3 +117,12 @@ function add_rating($rating) {
     // var_dump(mysqli_error($conn));
 
 }
+
+function top_ten() {
+    $sql = "SELECT joke_id, jokes.setup, jokes.punchline, SUM(rating) AS total, COUNT(rating) AS count, SUM(rating)/COUNT(rating) as total_rating
+            FROM reviews
+                INNER JOIN jokes ON reviews.joke_id=jokes.id
+            GROUP BY joke_id
+            ORDER BY total_rating DESC
+            LIMIT 10";
+}
